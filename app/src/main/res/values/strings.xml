@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ISell_Java</string>
+    <string name="import1">IMPORT</string>
+
 </resources>

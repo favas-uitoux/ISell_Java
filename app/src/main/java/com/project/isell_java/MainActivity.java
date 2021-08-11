@@ -1,9 +1,16 @@
 package com.project.isell_java;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -15,8 +22,9 @@ import java.util.List;
 
 public class MainActivity extends BasicActivity {
 
-    private RecyclerView rcv1;
+    private Button btn_import;
     private List<InventoriesItem> list_inv;
+    DownloadManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +32,19 @@ public class MainActivity extends BasicActivity {
         setContentView(R.layout.activity_main);
 
         init();
-        show_inventory();
+
+        btn_import.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+                long reference = manager.enqueue(request);
+            }
+        });
 
 
 
@@ -33,7 +53,7 @@ public class MainActivity extends BasicActivity {
 
     private void init()
     {
-        rcv1=findViewById(R.id.rcv1);
+        btn_import=findViewById(R.id.btn_import);
 
     }
 
