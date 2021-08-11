@@ -43,6 +43,7 @@ public class MainActivity extends BasicActivity {
                 DownloadManager.Request request = new DownloadManager.Request(uri);
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
                 long reference = manager.enqueue(request);
+
             }
         });
 
