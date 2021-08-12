@@ -11,8 +11,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnProgressListener;
+import com.downloader.OnStartOrResumeListener;
+import com.downloader.PRDownloader;
+import com.downloader.PRDownloaderConfig;
+import com.downloader.Progress;
 import com.google.gson.Gson;
 import com.project.isell_java.pojos.read_data.InventoriesItem;
 import com.project.isell_java.pojos.read_data.Response;
@@ -26,7 +37,8 @@ public class MainActivity extends BasicActivity {
     private Button btn_import;
     private List<InventoriesItem> list_inv;
 
-
+    ProgressBar progressBarOne;
+    private TextView textViewProgressOne;
 
 
     @Override
@@ -42,17 +54,67 @@ public class MainActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
 
-//                manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-//                Uri uri = Uri.parse("http://www.milantex.in/test/data.json");
-//                DownloadManager.Request request = new DownloadManager.Request(uri);
-//                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-//                long reference = manager.enqueue(request);
 
+
+
+                PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+                        .setReadTimeout(30_000)
+                        .setConnectTimeout(30_000)
+                        .build();
+                PRDownloader.initialize(getApplicationContext(), config);
 
                 try {
                     String url = "http://www.milantex.in/test/data.json";
                     String file = "/downloads/data.json";
 
+                    String fileName="1.json";
+                    String dirPath=getApplicationContext().getFilesDir().getAbsolutePath();
+
+
+                    int downloadId = PRDownloader.download(url, dirPath, fileName)
+                            .build()
+                            .setOnStartOrResumeListener(new OnStartOrResumeListener() {
+                                @Override
+                                public void onStartOrResume() {
+
+                                }
+                            })
+                            .setOnPauseListener(new OnPauseListener() {
+                                @Override
+                                public void onPause() {
+
+                                }
+                            })
+                            .setOnCancelListener(new OnCancelListener() {
+                                @Override
+                                public void onCancel() {
+
+                                }
+                            })
+                            .setOnProgressListener(new OnProgressListener() {
+                                @Override
+                                public void onProgress(Progress progress) {
+
+                                    long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
+                                    progressBarOne.setProgress((int) progressPercent);
+                                    textViewProgressOne.setText(Utils.getProgressDisplayLine(progress.currentBytes, progress.totalBytes));
+                                    progressBarOne.setIndeterminate(false);
+
+                                }
+                            })
+                            .start(new OnDownloadListener() {
+                                @Override
+                                public void onDownloadComplete() {
+
+                                }
+
+                                @Override
+                                public void onError(Error error) {
+
+                                }
+
+
+                            });
 
 
 
@@ -82,6 +144,8 @@ public class MainActivity extends BasicActivity {
     private void init()
     {
         btn_import=findViewById(R.id.btn_import);
+        progressBarOne=findViewById(R.id.progressBarOne);
+        textViewProgressOne=findViewById(R.id.textViewProgressOne);
 
     }
 
