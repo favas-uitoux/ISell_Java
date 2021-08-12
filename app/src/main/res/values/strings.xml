@@ -1,5 +1,25 @@
 <resources>
     <string name="app_name">ISell_Java</string>
     <string name="import1">IMPORT</string>
+    <string name="permission_granted">Permission Granted</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="permission_not_enabled">Permission not enabled</string>
+    <string name="download_eta_sec">%1$ds left</string>
+    <string name="download_eta_min">%1$dm %2$ds left</string>
+    <string name="download_eta_hrs">%1$dh %2$dm %3$ds left</string>
+
+    <string name="downloading">downloading…</string>
+    <string name="queued">QUEUED</string>
+    <string name="added">ADDED</string>
+    <string name="status_unknown">Status Unknown</string>
+
+    <string name="percent_progress">%1$d%%</string>
+
+    <string name="retry">RETRY</string>
+    <string name="start">Start</string>
+
+    <string name="download_speed_bytes">%1$d B/s</string>
+    <string name="download_speed_kb">%1$s KB/s</string>
+    <string name="download_speed_mb">%1$s MB/s</string>
 
 </resources>

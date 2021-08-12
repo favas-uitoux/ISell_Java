@@ -4,6 +4,11 @@ import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chootdev.csnackbar.Align;
+import com.chootdev.csnackbar.Duration;
+import com.chootdev.csnackbar.Snackbar;
+import com.chootdev.csnackbar.Type;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -30,4 +35,19 @@ public class BasicActivity extends AppCompatActivity {
     }
 
 
+
+
+
+    public void showSnack_W(String message)
+    {
+        Snackbar.with(BasicActivity.this,null)
+                .type(Type.WARNING)
+                .message(message)
+                .duration(Duration.LONG)
+                .fillParent(true)
+                .textAlign(Align.LEFT)
+                .show();
+
+
+    }
 }
