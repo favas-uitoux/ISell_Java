@@ -19,6 +19,11 @@ public interface Endpoint {
 @POST("client/login")
 Call<Response> do_login(@Field("mobile") String mobile, @Field("password") String password);
 
+@GET("client/data/import")
+Call<com.project.isell_java.pojos.import_data.Response> importData();
+
+
+
 
 
 

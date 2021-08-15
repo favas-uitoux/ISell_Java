@@ -27,5 +27,13 @@ public final class Utils {
     }
 
 
+    private static String tocken;
 
+    public static String getTocken() {
+        return tocken;
+    }
+
+    public static void setTocken(String tocken) {
+        Utils.tocken = tocken;
+    }
 }

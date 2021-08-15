@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.project.isell_java.BasicActivity;
 import com.project.isell_java.R;
+import com.project.isell_java.Utils;
 import com.project.isell_java.apiservice.ApiClient;
 import com.project.isell_java.apiservice.Endpoint;
 import com.project.isell_java.pojos.login.Response;
@@ -72,13 +73,16 @@ public class LoginActivity extends BasicActivity {
                         prefsEditor.commit();
 
 
+                        Utils.setTocken(response.body().getData().getToken());
+
+
                        // Gson gson1 = new Gson();
 //                        String json1 = mPrefs.getString("MyObject", "");
 //                        Response obj = gson.fromJson(json1, Response.class);
 //
 //                        Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_LONG).show();
 
-                        Intent in=new Intent(LoginActivity.this,MainActivity.class);
+                        Intent in=new Intent(LoginActivity.this,ImportActivity.class);
                         startActivity(in);
 
 
