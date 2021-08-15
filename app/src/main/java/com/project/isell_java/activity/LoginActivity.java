@@ -1,14 +1,14 @@
-package com.project.isell_java;
+package com.project.isell_java.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.Nullable;
+import com.project.isell_java.BasicActivity;
+import com.project.isell_java.R;
 
-public class LoginActivity  extends  BasicActivity{
+public class LoginActivity extends BasicActivity {
 
 
     private EditText edt1,edt2;

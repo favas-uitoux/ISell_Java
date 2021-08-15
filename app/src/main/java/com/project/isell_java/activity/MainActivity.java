@@ -1,13 +1,6 @@
-package com.project.isell_java;
+package com.project.isell_java.activity;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.DownloadManager;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +18,11 @@ import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.Progress;
 import com.google.gson.Gson;
+import com.project.isell_java.BasicActivity;
+import com.project.isell_java.R;
+import com.project.isell_java.Utils;
 import com.project.isell_java.pojos.read_data.InventoriesItem;
 import com.project.isell_java.pojos.read_data.Response;
-
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,20 +1,17 @@
-package com.project.isell_java;
+package com.project.isell_java.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
 
-
-
-import java.io.Serializable;
-import java.util.List;
+import com.project.isell_java.BasicActivity;
+import com.project.isell_java.R;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -175,7 +172,7 @@ public class SplashActivity extends BasicActivity {
     private void goto_next_screen() {
 
 
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             customType(SplashActivity.this, "fadein-to-fadeout");
             finish();
 
