@@ -1,10 +1,17 @@
 package com.project.isell_java.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
+
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,8 +30,12 @@ import retrofit2.Callback;
 public class LoginActivity extends BasicActivity {
 
 
-    private EditText edt1,edt2;
-    private Button btn1;
+    private int display_cnt = 0;
+    private EditText edt1, edt2;
+    private br.com.simplepass.loadingbutton.customViews.CircularProgressButton btn1;
+    private ConstraintLayout clmain;
+    private CardView card1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +44,94 @@ public class LoginActivity extends BasicActivity {
 
         init();
 
+
+
+
+
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Endpoint apiService = ApiClient.getClient().create(Endpoint.class);
+                hideSoftKeyboard(LoginActivity.this,v);
+                login();
 
-                Call<Response> call = apiService.do_login("8943220888","123456");
-                call.enqueue(new Callback<Response>() {
-                    @Override
-                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
 
+
+
+
+            }
+        });
+
+
+
+
+        clmain.getViewTreeObserver().addOnGlobalLayoutListener(new
+                                                                       ViewTreeObserver.OnGlobalLayoutListener() {
+                                                                           @Override
+                                                                           public void onGlobalLayout() {
+                                                                               display_cnt = display_cnt + 1;
+
+
+                                                                               if (display_cnt > 2) {
+
+                                                                                   Rect r = new Rect();
+                                                                                   clmain.getWindowVisibleDisplayFrame(r);
+                                                                                   int screenHeight = clmain.getRootView().getHeight();
+                                                                                   int keypadHeight = screenHeight - r.bottom;
+                                                                                   if (keypadHeight > screenHeight * 0.15) {
+
+                                                                                       ObjectAnimator animator = ObjectAnimator.ofFloat(card1, "translationY", -500f);
+                                                                                       animator.setDuration(2000);
+                                                                                       animator.start();
+
+                                                                                       //   Toast.makeText(LoginActivity.this, "Keyboard is showing", Toast.LENGTH_LONG).show();
+                                                                                   } else {
+
+
+                                                                                       ObjectAnimator animator = ObjectAnimator.ofFloat(card1, "translationY", 100f);
+                                                                                       animator.setDuration(2000);
+                                                                                       animator.start();
+
+
+                                                                                       //Toast.makeText(LoginActivity.this, "keyboard closed"+ display_cnt, Toast.LENGTH_LONG).show();
+                                                                                   }
+
+                                                                               }
+                                                                           }
+
+                                                                       });
+
+    }
+
+
+    private void init() {
+
+        edt1 = findViewById(R.id.edt1);
+        edt2 = findViewById(R.id.edt2);
+        btn1 = findViewById(R.id.btn1);
+        clmain = findViewById(R.id.clmain);
+        card1 = findViewById(R.id.card1);
+
+    }
+
+    private  void login()
+    {
+
+        String username = edt1.getText().toString().trim();
+        String password = edt2.getText().toString().trim();
+
+
+        if (!username.equals("") && !password.equals("")) {
+
+            Endpoint apiService = ApiClient.getClient().create(Endpoint.class);
+
+            //  Call<Response> call = apiService.do_login("8943220888", "123456");
+            Call<Response> call = apiService.do_login(edt1.getText().toString(), edt2.getText().toString());
+
+            call.enqueue(new Callback<Response>() {
+                @Override
+                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
 
 
 //                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().
@@ -54,14 +142,17 @@ public class LoginActivity extends BasicActivity {
 //                        String value = preferences.getString("pref_login", "");
 
 
-                        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+                    if (response.body().getCode().equals("CLIENT_LOGIN_OK")) {
+
+
+                        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
 
 
                         mPrefs.edit().clear();
-                     //   Response myObject = new Response();
+                        //   Response myObject = new Response();
 
 
-                       Response MyObject= new Response();
+                        Response MyObject = new Response();
                         MyObject.setCode(response.body().getCode());
                         MyObject.setMsg(response.body().getMsg());
                         MyObject.setData(response.body().getData());
@@ -75,42 +166,32 @@ public class LoginActivity extends BasicActivity {
 
                         Utils.setTocken(response.body().getData().getToken());
 
-
-                       // Gson gson1 = new Gson();
-//                        String json1 = mPrefs.getString("MyObject", "");
-//                        Response obj = gson.fromJson(json1, Response.class);
-//
-//                        Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_LONG).show();
-
-                        Intent in=new Intent(LoginActivity.this,ImportActivity.class);
+                        Intent in = new Intent(LoginActivity.this, ImportActivity.class);
                         startActivity(in);
 
-
+                    } else {
+                        showSnack_W(""+response.body().getMsg());
                     }
 
-                    @Override
-                    public void onFailure(Call<Response> call, Throwable t) {
-                        showSnack_W("not ok");
-                    }
-                });
+                }
+
+                @Override
+                public void onFailure(Call<Response> call, Throwable t) {
+                    showSnack_W("not ok");
+                }
+            });
+        }
+        else
+        {
+
+        }
 
 
-            }
-        });
 
 
 
     }
 
-
-    private void init()
-    {
-
-        edt1=findViewById(R.id.edt1);
-        edt2=findViewById(R.id.edt2);
-        btn1=findViewById(R.id.btn1);
-
-    }
 
 
 }

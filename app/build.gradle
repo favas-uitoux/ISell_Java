@@ -61,5 +61,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
 
+    implementation 'com.airbnb.android:lottie:4.1.0'
+
+    implementation 'br.com.simplepass:loading-button-android:2.2.0'
+
+
 
 }

@@ -31,15 +31,6 @@ public class SplashActivity extends BasicActivity {
 
 
 
-        if (!isTaskRoot()
-                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
-                && getIntent().getAction() != null
-                && getIntent().getAction().equals(Intent.ACTION_MAIN)
-        ) {
-            finish();
-            return;
-        }
-
 
       //  db = Appdb.getDb_instance(getApplicationContext());
 
@@ -59,7 +50,7 @@ public class SplashActivity extends BasicActivity {
 
             }
 
-        }, 3000);
+        }, 8000);
 
 
     }
