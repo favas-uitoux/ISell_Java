@@ -32,7 +32,13 @@
             android:screenOrientation="portrait"/>
 
 
-        <activity android:name=".activity.ImportActivity"
+        <activity
+
+            android:name=".activity.ImportActivity"
+            android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".activity.DashboardActivity"
             android:screenOrientation="portrait"/>
 
 

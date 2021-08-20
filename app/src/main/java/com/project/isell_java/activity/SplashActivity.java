@@ -50,7 +50,7 @@ public class SplashActivity extends BasicActivity {
 
             }
 
-        }, 8000);
+        }, 4000);
 
 
     }

@@ -124,10 +124,13 @@ public class LoginActivity extends BasicActivity {
 
         if (!username.equals("") && !password.equals("")) {
 
+            btn1.setEnabled(false);
+            btn1.startAnimation();
+
             Endpoint apiService = ApiClient.getClient().create(Endpoint.class);
 
             //  Call<Response> call = apiService.do_login("8943220888", "123456");
-            Call<Response> call = apiService.do_login(edt1.getText().toString(), edt2.getText().toString());
+            Call<Response> call = apiService.do_login(username, password);
 
             call.enqueue(new Callback<Response>() {
                 @Override
@@ -141,43 +144,57 @@ public class LoginActivity extends BasicActivity {
 //                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //                        String value = preferences.getString("pref_login", "");
 
-
-                    if (response.body().getCode().equals("CLIENT_LOGIN_OK")) {
-
-
-                        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+                    if(response.body()!=null)
+                    {
+                        if (response.body().getCode().equals("CLIENT_LOGIN_OK")) {
 
 
-                        mPrefs.edit().clear();
-                        //   Response myObject = new Response();
+                            SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
 
 
-                        Response MyObject = new Response();
-                        MyObject.setCode(response.body().getCode());
-                        MyObject.setMsg(response.body().getMsg());
-                        MyObject.setData(response.body().getData());
-
-                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                        Gson gson = new Gson();
-                        String json = gson.toJson(MyObject);
-                        prefsEditor.putString("MyObject", json);
-                        prefsEditor.commit();
+                            mPrefs.edit().clear();
+                            //   Response myObject = new Response();
 
 
-                        Utils.setTocken(response.body().getData().getToken());
+                            Response MyObject = new Response();
+                            MyObject.setCode(response.body().getCode());
+                            MyObject.setMsg(response.body().getMsg());
+                            MyObject.setData(response.body().getData());
 
-                        Intent in = new Intent(LoginActivity.this, ImportActivity.class);
-                        startActivity(in);
+                            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                            Gson gson = new Gson();
+                            String json = gson.toJson(MyObject);
+                            prefsEditor.putString("MyObject", json);
+                            prefsEditor.commit();
 
-                    } else {
-                        showSnack_W(""+response.body().getMsg());
+
+                            Utils.setTocken(response.body().getData().getToken());
+
+                            Intent in = new Intent(LoginActivity.this, DashboardActivity.class);
+                            startActivity(in);
+                            finish();
+
+                        } else {
+                            showSnack_W(""+response.body().getMsg());
+                        }
                     }
+
+
+
+
+                    btn1.stopAnimation();
+                    btn1.revertAnimation();
+                    btn1.setEnabled(true);
 
                 }
 
                 @Override
                 public void onFailure(Call<Response> call, Throwable t) {
                     showSnack_W("not ok");
+
+                    btn1.stopAnimation();
+                    btn1.revertAnimation();
+                    btn1.setEnabled(true);
                 }
             });
         }

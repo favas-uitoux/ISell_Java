@@ -51,25 +51,11 @@ public class AdapterItemListing extends RecyclerView.Adapter<AdapterItemListing.
 
         final InvEntity cpr = list.get(position);
 
-
-
-
-
-
-
-
-
-
+int slno=position+1;
 
         holder.txt1.setText(cpr.getName());
+        holder.txt0.setText(""+slno);
 
-
-
-
-
-
-
-        //  holder.txtold.setBackgroundResource(R.color.color1);
 
 
     }
@@ -84,7 +70,7 @@ public class AdapterItemListing extends RecyclerView.Adapter<AdapterItemListing.
 
 
 
-        TextView txt1;
+        TextView txt1,txt0;
 
 
 
@@ -93,10 +79,7 @@ public class AdapterItemListing extends RecyclerView.Adapter<AdapterItemListing.
 
 
             txt1 = itemView.findViewById(R.id.txt1);
-
-
-
-
+            txt0 = itemView.findViewById(R.id.txt0);
 
 
         }

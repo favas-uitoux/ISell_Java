@@ -1,35 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:weightSum="1">
 
 
 
-    <Button
-        android:id="@+id/btn_import"
+
+    <include layout="@layout/model_heading11"
+        android:layout_height="0dip"
+        android:layout_weight="0.08"
+        android:layout_width="match_parent" />
+
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Import"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.9"
 
-        />
+        >
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recv1"
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recv1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/llchrome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_import"/>
+        android:layout_height="0dip"
+        android:layout_weight="0.8"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <com.ldoublem.loadingviewlib.LVChromeLogo
+            android:id="@+id/chrome1"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            />
+
+    </LinearLayout>
 
 
 
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+</LinearLayout>
