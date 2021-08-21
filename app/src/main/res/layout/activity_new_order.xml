@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:weightSum="1">
+
+
+
+    <EditText
+        android:id="@+id/edt_ser"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:hint="Search"
+        android:drawableEnd="@drawable/ic_find"
+
+       android:gravity="center"
+        android:layout_weight=".1"/>
+
+
+
+    <include layout="@layout/model_heading_new_order"
+        android:layout_height="0dip"
+        android:layout_weight="0.04"
+        android:layout_width="match_parent" />
+
+
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recv1"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight=".74"
+            />
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.08"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center">
+
+
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+
+
+            android:layout_height="40dp"
+
+            app:spinning_bar_width="4dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

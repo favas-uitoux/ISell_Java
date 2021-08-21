@@ -8,17 +8,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.project.isell_java.Constants;
+import com.project.isell_java.database.daos.CartEntityDao;
 import com.project.isell_java.database.daos.InvEntityDao;
+import com.project.isell_java.database.entities.CartEntity;
 import com.project.isell_java.database.entities.InvEntity;
 
 
-@Database(version = 1,entities = {InvEntity.class})
+@Database(version = 3,entities = {InvEntity.class, CartEntity.class})
 public abstract  class Appdb extends RoomDatabase {
 
 
   private static Appdb db;
 
   public abstract InvEntityDao getInvEntityDao();
+  public abstract CartEntityDao getCartEntityDao();
 
 
 

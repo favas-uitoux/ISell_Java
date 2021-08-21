@@ -26,6 +26,11 @@ public interface InvEntityDao {
 
 
 
+    @Query(" Select * from inv  where name like  :keyword  order by id")
+    public List<InvEntity> get_all_similar_datas(String keyword);
+
+
+
     @Query(" Delete from inv")
     public int del_all();
 //
@@ -37,26 +42,7 @@ public interface InvEntityDao {
     public Long insert_inv_item(InvEntity tbl);
 
 
-//
-//
-//    @Query(" Select *  from cart where stkid=:stockid")
-//    public  CartEntity get_qty_of_stockid(String stockid);
-//
-//    @Update
-//    void update(CartEntity tbl);
-//
-//
-//    @Query(" Update cart set qty=:qty where id=:id")
-//    public  int update_qty(long id,int qty);
-//
-//    @Query(" Delete from cart where  id=:id")
-//    public int del_item(long id);
-//
-//    @Query(" Update cart set rate=:rate ,offer_price=:offer_price,buy_qty=:buy_qty,free_qty=:free_qty,free_percent=:free_percent,offer_end_date=:offer_end_date  where stkid=:stkid")
-//    public int update_new_rate_and_offers(String stkid,float rate,float offer_price,int buy_qty,int free_qty,float free_percent,String offer_end_date);
-//
-//    @Query(" Update cart set qty=:qty  where stkid=:stkid")
-//    public int update_avb_qty(String stkid,int qty);
+
 
 
 }

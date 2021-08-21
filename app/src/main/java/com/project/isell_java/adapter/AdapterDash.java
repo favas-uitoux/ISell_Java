@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.project.isell_java.R;
 import com.project.isell_java.activity.ImportActivity;
+import com.project.isell_java.activity.NewOrderActivity;
 
 import java.util.List;
 
@@ -116,15 +117,16 @@ public class AdapterDash extends BaseAdapter {
                     context.startActivity(in);
 
                 }
-   //             else if (holder.txt1.getText().toString().trim().equals(AddStudentDetails)) {
-//                    // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
-//                    Intent in = new Intent(context, AddStudentActivity.class);
-//                    in.putExtra("user_role", user_role);
-//
-//
-//                    context.startActivity(in);
-//
-//                } else if (holder.txt1.getText().toString().trim().equals(ChangePassword)) {
+                else if (holder.txt1.getText().toString().trim().equals("New Order")) {
+                    // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
+                    Intent in = new Intent(context, NewOrderActivity.class);
+                   // in.putExtra("user_role", user_role);
+
+
+                    context.startActivity(in);
+
+                }
+                //else if (holder.txt1.getText().toString().trim().equals(ChangePassword)) {
 //                    // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
 //                    Intent in = new Intent(context, ChangePasswordActivity.class);
 //
