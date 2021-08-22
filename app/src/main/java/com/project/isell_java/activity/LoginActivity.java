@@ -1,6 +1,7 @@
 package com.project.isell_java.activity;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -10,8 +11,10 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +25,8 @@ import com.project.isell_java.R;
 import com.project.isell_java.Utils;
 import com.project.isell_java.apiservice.ApiClient;
 import com.project.isell_java.apiservice.Endpoint;
+import com.project.isell_java.database.appdb.Appdb;
+import com.project.isell_java.database.entities.ChartcodeEntity;
 import com.project.isell_java.pojos.login.Response;
 
 import retrofit2.Call;
@@ -35,6 +40,7 @@ public class LoginActivity extends BasicActivity {
     private br.com.simplepass.loadingbutton.customViews.CircularProgressButton btn1;
     private ConstraintLayout clmain;
     private CardView card1;
+    private Appdb db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +113,7 @@ public class LoginActivity extends BasicActivity {
 
     private void init() {
 
+        db = Appdb.getDb_instance(getApplicationContext());
         edt1 = findViewById(R.id.edt1);
         edt2 = findViewById(R.id.edt2);
         btn1 = findViewById(R.id.btn1);
@@ -170,9 +177,34 @@ public class LoginActivity extends BasicActivity {
 
                             Utils.setTocken(response.body().getData().getToken());
 
-                            Intent in = new Intent(LoginActivity.this, DashboardActivity.class);
-                            startActivity(in);
-                            finish();
+
+                            //save token to db
+                            db.getChartcodeEntityDao().del_token();
+
+                            db.getChartcodeEntityDao().insert_chartcode_item(new ChartcodeEntity(0,"token",response.body().getData().getToken(),"",0));
+
+
+
+                            //check serie no set or not?
+
+                        int count=    db.getChartcodeEntityDao().get_count_of_stored_series_no();
+
+                        if(count==1)
+                        {
+                            go_to_dashboard();
+                        }
+                        else
+                        {
+                            db.getChartcodeEntityDao().del_series();
+
+                            show_dialog();
+
+
+                        }
+
+
+
+
 
                         } else {
                             showSnack_W(""+response.body().getMsg());
@@ -190,7 +222,7 @@ public class LoginActivity extends BasicActivity {
 
                 @Override
                 public void onFailure(Call<Response> call, Throwable t) {
-                    showSnack_W("not ok");
+                    showSnack_W("Something went wrong");
 
                     btn1.stopAnimation();
                     btn1.revertAnimation();
@@ -208,6 +240,106 @@ public class LoginActivity extends BasicActivity {
 
 
     }
+
+private  void go_to_dashboard()
+{
+    Intent in = new Intent(LoginActivity.this, DashboardActivity.class);
+    startActivity(in);
+    finish();
+
+}
+
+
+private void show_dialog()
+{
+    final Dialog dialog = new Dialog(LoginActivity.this);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+    dialog.setContentView(R.layout.cust_dialog1);
+    dialog.setCancelable(false);
+    dialog.show();
+
+
+    EditText edt_series=    dialog.findViewById(R.id.edt_series);
+    Button btn_save=    dialog.findViewById(R.id.btn_save);
+
+    btn_save.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if(edt_series.getText().toString().trim().length()>0)
+            {
+                //save the series in web  , then in localdb , then go to dashboard
+              //  hideSoftKeyboard(LoginActivity.this,v);
+
+
+                Endpoint apiService = ApiClient.getClient().create(Endpoint.class);
+                Call<com.project.isell_java.pojos.save_series.Response> call = apiService.save_series(edt_series.getText().toString().trim());
+
+                call.enqueue(new Callback<com.project.isell_java.pojos.save_series.Response>() {
+                    @Override
+                    public void onResponse(Call<com.project.isell_java.pojos.save_series.Response> call, retrofit2.Response<com.project.isell_java.pojos.save_series.Response> response) {
+                      if(response.body() !=null)
+                      {
+                          if(response.body().getResult().equals("1"))
+                          {
+                              db.getChartcodeEntityDao().insert_chartcode_item(new ChartcodeEntity
+                                      (0,"series_no",edt_series.getText().toString().trim(),"",1));
+
+                              int count=    db.getChartcodeEntityDao().get_count_of_stored_series_no();
+
+                              if(count==1)
+                              {
+                                  go_to_dashboard();
+                              }
+
+                          }
+                          else
+                          {
+
+
+                              Toast toast = Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_LONG);
+                              toast.setGravity(Gravity.CENTER, 0, 400);
+                              toast.show();
+
+
+
+
+                          }
+                      }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<com.project.isell_java.pojos.save_series.Response> call, Throwable t) {
+
+                    }
+                });
+            }
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
 
 
 

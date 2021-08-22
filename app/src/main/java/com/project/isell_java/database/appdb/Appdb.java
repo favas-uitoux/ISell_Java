@@ -9,12 +9,16 @@ import androidx.room.RoomDatabase;
 
 import com.project.isell_java.Constants;
 import com.project.isell_java.database.daos.CartEntityDao;
+import com.project.isell_java.database.daos.ChartcodeEntityDao;
 import com.project.isell_java.database.daos.InvEntityDao;
+import com.project.isell_java.database.daos.OrderDetailsEntityDao;
 import com.project.isell_java.database.entities.CartEntity;
+import com.project.isell_java.database.entities.ChartcodeEntity;
 import com.project.isell_java.database.entities.InvEntity;
+import com.project.isell_java.database.entities.OrderDetailsEntity;
 
 
-@Database(version = 3,entities = {InvEntity.class, CartEntity.class})
+@Database(version = 6,entities = {InvEntity.class, CartEntity.class, ChartcodeEntity.class, OrderDetailsEntity.class})
 public abstract  class Appdb extends RoomDatabase {
 
 
@@ -22,6 +26,8 @@ public abstract  class Appdb extends RoomDatabase {
 
   public abstract InvEntityDao getInvEntityDao();
   public abstract CartEntityDao getCartEntityDao();
+  public abstract ChartcodeEntityDao getChartcodeEntityDao();
+  public abstract OrderDetailsEntityDao getOrderDetailsEntityDao();
 
 
 

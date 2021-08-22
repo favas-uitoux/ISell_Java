@@ -23,6 +23,9 @@ Call<Response> do_login(@Field("mobile") String mobile, @Field("password") Strin
 Call<com.project.isell_java.pojos.import_data.Response> importData();
 
 
+    @FormUrlEncoded
+    @POST("/save_series.php")
+    Call<com.project.isell_java.pojos.save_series.Response> save_series(@Field("series") String series);
 
 
 

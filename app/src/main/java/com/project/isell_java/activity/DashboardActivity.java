@@ -6,13 +6,14 @@ import android.widget.GridView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.project.isell_java.BasicActivity;
 import com.project.isell_java.R;
 import com.project.isell_java.adapter.AdapterDash;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends BasicActivity {
 
     private GridView gridview;
     private List<String> list;

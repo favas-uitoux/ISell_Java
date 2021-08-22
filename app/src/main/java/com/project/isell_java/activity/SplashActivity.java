@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 

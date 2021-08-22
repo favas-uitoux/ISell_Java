@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 import com.project.isell_java.R;
+import com.project.isell_java.activity.DashboardActivity;
 import com.project.isell_java.activity.ImportActivity;
 import com.project.isell_java.activity.NewOrderActivity;
 
@@ -25,11 +27,13 @@ public class AdapterDash extends BaseAdapter {
     Context context;
     List<String> list;
     String user_role = "";
+    private DashboardActivity activity;
 
     public AdapterDash(Context context, List<String> list, String user_role) {
         this.context = context;
         this.list = list;
         this.user_role = user_role;
+        activity = (DashboardActivity) context;
     }
 
     private class ViewHolder {
@@ -98,6 +102,11 @@ public class AdapterDash extends BaseAdapter {
         holder.txt1.setText(cpr);
 
         if (cpr.equals("New Order")) {
+
+//            if (context instanceof DashboardActivity) {
+//
+//            }
+
             holder.iv1.setImageResource(R.drawable.new1);
         } else if (cpr.equals("Import")) {
             holder.iv1.setImageResource(R.drawable.import1);
@@ -118,12 +127,22 @@ public class AdapterDash extends BaseAdapter {
 
                 }
                 else if (holder.txt1.getText().toString().trim().equals("New Order")) {
-                    // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
-                    Intent in = new Intent(context, NewOrderActivity.class);
-                   // in.putExtra("user_role", user_role);
+
+                  if( activity.isTimeAutomatic(context))
+                  {
+                      Intent in = new Intent(context, NewOrderActivity.class);
+                      // in.putExtra("user_role", user_role);
 
 
-                    context.startActivity(in);
+                      context.startActivity(in);
+                  }
+                  else
+                  {
+                      activity.showSnack_W("Please enable automatic date and time");
+                  }
+
+
+
 
                 }
                 //else if (holder.txt1.getText().toString().trim().equals(ChangePassword)) {

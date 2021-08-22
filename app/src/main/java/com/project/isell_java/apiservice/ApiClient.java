@@ -12,9 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient
 {
-  //  ApiClient.BASE_URL = "http://nepdata.in/";
-//    public  static  String BASE_URL="https://jsonplaceholder.typicode.com";
- //   public  static String BASE_URL="https://neptonglobal.in/";
+
     public  static String BASE_URL="https://ibill-sales-order-api.erekha.in/";
     public   static Retrofit retrofit=null;
 
