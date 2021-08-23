@@ -1,7 +1,10 @@
 package com.project.isell_java.apiservice;
 
 
+import android.content.Context;
+
 import com.project.isell_java.Utils;
+import com.project.isell_java.database.appdb.Appdb;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -15,17 +18,22 @@ public class ApiClient
 
     public  static String BASE_URL="https://ibill-sales-order-api.erekha.in/";
     public   static Retrofit retrofit=null;
+    private static Appdb db;
 
 
 
+    public ApiClient(Appdb db){
+        this.db=db;
+    }
 
 
     public static Retrofit getClient() {
         if (retrofit==null) {
 
+
             Interceptor interceptor = chain -> {
                 Request request = chain.request().newBuilder()
-                        .addHeader("Authorization","Bearer " + Utils.getTocken())
+                        .addHeader("Authorization","Bearer " +db.getChartcodeEntityDao().get_stored_token())
                         .build();
 
 

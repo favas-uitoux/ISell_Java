@@ -18,6 +18,12 @@ public interface ChartcodeEntityDao {
     @Query(" Select count(*)  from chartcode where type='series_no' ")
     public int get_count_of_stored_series_no();
 
+    @Query(" Select count(*)  from chartcode where type='token' ")
+    public int get_count_of_stored_token();
+
+
+    @Query(" Select val1 from chartcode where type='token' ")
+    public String get_stored_token();
 
     @Query(" Select * from chartcode  where type='series_no' ")
     public List<ChartcodeEntity> get_series_details();

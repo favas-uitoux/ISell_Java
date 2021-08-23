@@ -14,6 +14,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.project.isell_java.BasicActivity;
 import com.project.isell_java.R;
+import com.project.isell_java.apiservice.ApiClient;
+import com.project.isell_java.database.appdb.Appdb;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -21,8 +23,7 @@ import static maes.tech.intentanim.CustomIntent.customType;
 public class SplashActivity extends BasicActivity {
 
 
-    String action = "";
-  //  private Appdb db;
+    private Appdb db;
 
     private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
 
@@ -32,9 +33,9 @@ public class SplashActivity extends BasicActivity {
         setContentView(R.layout.activity_splash);
 
 
+     init();
 
 
-      //  db = Appdb.getDb_instance(getApplicationContext());
 
 
 
@@ -54,6 +55,14 @@ public class SplashActivity extends BasicActivity {
 
         }, 3000);
 
+
+    }
+
+    private void init()
+    {
+        db = Appdb.getDb_instance(getApplicationContext());
+
+      ApiClient client=new  ApiClient(db);
 
     }
 
@@ -165,9 +174,19 @@ public class SplashActivity extends BasicActivity {
     private void goto_next_screen() {
 
 
+
+        if(db.getChartcodeEntityDao().get_count_of_stored_token()==1)
+        {
+            startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
+            customType(SplashActivity.this, "fadein-to-fadeout");
+            finish();
+        }
+        else{
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             customType(SplashActivity.this, "fadein-to-fadeout");
             finish();
+        }
+
 
 
 

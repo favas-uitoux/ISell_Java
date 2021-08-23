@@ -105,26 +105,46 @@ public class ImportActivity extends BasicActivity {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
 
-                showSnack_W("ok");
-
-                db.getInvEntityDao().del_all();
-
-                for (InventoriesItem row : response.body().getData().getInventories()) {
 
 
-                    db.getInvEntityDao().insert_inv_item(new InvEntity(0, "" + row.getUid(), "" + row.getName(), "" + row.getHsncode(), "" + row.getGroup(),
-                            row.getRate1(), row.getRate2(), row.getRate3(), row.getRate4(), 1));
+
+                if(response.body() !=null) {
+                    if (response.body().getData() != null) {
+
+
+                        db.getInvEntityDao().del_all();
+
+                        for (InventoriesItem row : response.body().getData().getInventories()) {
+
+
+                            db.getInvEntityDao().insert_inv_item(new InvEntity(0, "" + row.getUid(), "" + row.getName(), "" + row.getHsncode(), "" + row.getGroup(),
+                                    row.getRate1(), row.getRate2(), row.getRate3(), row.getRate4(), 1));
+
+                        }
+
+
+                        showSnack_W("Downloaded " + db.getInvEntityDao().get_count() + " items");
+                        chrome1.stopAnim();
+                        llchrome.setVisibility(View.GONE);
+                        refresh1.setVisibility(View.VISIBLE);
+                        show_the_list();
+
+
+                    } else {
+                        showSnack_W("No items found");
+                        chrome1.stopAnim();
+                        llchrome.setVisibility(View.GONE);
+                        refresh1.setVisibility(View.VISIBLE);
+                    }
 
                 }
-
-
-                showSnack_W("Downloaded " + db.getInvEntityDao().get_count()+" items");
-                chrome1.stopAnim();
-                llchrome.setVisibility(View.GONE);
-                refresh1.setVisibility(View.VISIBLE);
-                show_the_list();
-
-
+                else
+                {
+                    showSnack_W("No items found");
+                    chrome1.stopAnim();
+                    llchrome.setVisibility(View.GONE);
+                    refresh1.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

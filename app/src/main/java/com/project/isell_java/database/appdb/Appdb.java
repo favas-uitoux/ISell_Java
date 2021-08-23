@@ -18,7 +18,7 @@ import com.project.isell_java.database.entities.InvEntity;
 import com.project.isell_java.database.entities.OrderDetailsEntity;
 
 
-@Database(version = 6,entities = {InvEntity.class, CartEntity.class, ChartcodeEntity.class, OrderDetailsEntity.class})
+@Database(version = 6,entities = {InvEntity.class, CartEntity.class, ChartcodeEntity.class, OrderDetailsEntity.class},exportSchema = false)
 public abstract  class Appdb extends RoomDatabase {
 
 

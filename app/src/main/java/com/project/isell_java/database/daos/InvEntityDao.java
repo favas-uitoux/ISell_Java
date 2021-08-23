@@ -1,12 +1,12 @@
 package com.project.isell_java.database.daos;
 
 
-import androidx.lifecycle.LiveData;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
+
 
 
 import com.project.isell_java.database.entities.InvEntity;
@@ -26,8 +26,8 @@ public interface InvEntityDao {
 
 
 
-    @Query(" Select * from inv  where name like  :keyword  order by id")
-    public List<InvEntity> get_all_similar_datas(String keyword);
+    @Query(" Select * from inv  where name Like  :arg0  order by id")
+    public List<InvEntity> get_all_similar_datas(String arg0);
 
 
 
