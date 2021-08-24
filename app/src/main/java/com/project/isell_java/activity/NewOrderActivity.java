@@ -24,6 +24,7 @@ import com.project.isell_java.adapter.AdapterCart;
 import com.project.isell_java.adapter.AdapterNewOrder;
 import com.project.isell_java.database.appdb.Appdb;
 import com.project.isell_java.database.entities.CartEntity;
+import com.project.isell_java.database.entities.ChartcodeEntity;
 import com.project.isell_java.database.entities.InvEntity;
 import com.project.isell_java.database.entities.OrderDetailsEntity;
 import com.project.isell_java.pojos.model_order_list.Model;
@@ -126,7 +127,16 @@ public class NewOrderActivity extends BasicActivity {
         if (type == 1) {
             list_inv.addAll(db.getInvEntityDao().get_all_datas());
             for (InvEntity row : list_inv) {
+
+
+                //chk price level and save price level in db
+                if()
+
                 double rate = row.getRate1();
+
+
+
+
                 list.add(new Model(row.getUid(), row.getName(), row.getGroup(), rate));
             }
         }
@@ -168,10 +178,10 @@ public class NewOrderActivity extends BasicActivity {
         RecyclerView recv1 = dialog.findViewById(R.id.recv1);
         Button btn_cnfm = dialog.findViewById(R.id.btn_cnfm);
 
-        List<CartEntity> list = new ArrayList<>();
-        list.addAll(db.getCartEntityDao().get_all_datas());
+        List<CartEntity> list_confirm = new ArrayList<>();
+        list_confirm.addAll(db.getCartEntityDao().get_all_datas());
 
-        adp_cart_confirm=new AdapterCart(getApplicationContext(),list);
+        adp_cart_confirm=new AdapterCart(getApplicationContext(),list_confirm);
 
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recv1.setLayoutManager(lm);
@@ -192,6 +202,58 @@ public class NewOrderActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
                 // insert cart into order details
+
+                if( isTimeAutomatic(getApplicationContext()))
+                {
+
+                    //order date
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    String oDate = df.format(c.getTime());
+
+
+                    //order no
+                    List<ChartcodeEntity> list_order_series_details=   db.getChartcodeEntityDao().get_series_details();
+                    String series= list_order_series_details.get(0).getVal1();
+                    int no=list_order_series_details.get(0).getVal3();
+                    String order_no=series +"-"+no;
+
+                    String client_id=""+db.getChartcodeEntityDao().get_stored_client_id();
+                    String distro_id=""+db.getChartcodeEntityDao().get_stored_distro_id();
+
+
+                    for(CartEntity row:list_confirm)
+                    {
+
+                        row.getItem_id();
+                        row.getItemname();
+
+                        row.getQty();
+                        row.getSel_rate();
+
+                        // calculate total qty*rate
+
+                    }
+
+
+
+                 //   showSnack_W(series +"-"+no);
+                    Toast.makeText(getApplicationContext(),""+series +"-"+no,Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+
+                }
+                else
+                {
+                    showSnack_W("Please enable automatic date");
+                }
+
+
+
             }
         });
 
@@ -205,11 +267,11 @@ public class NewOrderActivity extends BasicActivity {
 //        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
 //        Toast.makeText(getApplicationContext(),currentDateTimeString,Toast.LENGTH_LONG).show();
 
-//        Calendar c = Calendar.getInstance();
 //
 //
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        String formattedDate = df.format(c.getTime());
+//
+//
+//
 //        // formattedDate have current date/time
 //        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
 

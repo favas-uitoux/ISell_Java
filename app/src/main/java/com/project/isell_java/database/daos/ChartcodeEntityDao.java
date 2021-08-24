@@ -25,6 +25,14 @@ public interface ChartcodeEntityDao {
     @Query(" Select val1 from chartcode where type='token' ")
     public String get_stored_token();
 
+    @Query(" Select val2 from chartcode where type='token' ")
+    public String get_stored_client_id();
+
+
+    @Query(" Select val3 from chartcode where type='token' ")
+    public int get_stored_distro_id();
+
+
     @Query(" Select * from chartcode  where type='series_no' ")
     public List<ChartcodeEntity> get_series_details();
 
@@ -38,6 +46,8 @@ public interface ChartcodeEntityDao {
 
     @Query(" Delete from chartcode where type='series_no' ")
     public int del_series();
+
+
 
 
 }

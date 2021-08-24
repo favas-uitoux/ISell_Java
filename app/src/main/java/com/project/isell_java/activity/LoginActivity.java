@@ -181,7 +181,7 @@ public class LoginActivity extends BasicActivity {
                             //save token to db
                             db.getChartcodeEntityDao().del_token();
 
-                            db.getChartcodeEntityDao().insert_chartcode_item(new ChartcodeEntity(0,"token",response.body().getData().getToken(),"",0));
+                            db.getChartcodeEntityDao().insert_chartcode_item(new ChartcodeEntity(0,"token",response.body().getData().getToken(),""+response.body().getData().getUser().getId(),response.body().getData().getUser().getDistroId()));
 
 
 

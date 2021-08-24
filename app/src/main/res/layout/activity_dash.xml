@@ -88,12 +88,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat"
-                android:text="Name:-"
+                android:text="Clien id:-"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/txtname"
+                android:id="@+id/txt_clientid"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat"
@@ -113,12 +113,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_alternates"
-                android:text="Role:-"
+                android:text="Dis id:-"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/txtrole"
+                android:id="@+id/txt_distroid"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_alternates"
