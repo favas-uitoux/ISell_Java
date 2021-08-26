@@ -18,6 +18,7 @@ import com.project.isell_java.R;
 import com.project.isell_java.activity.DashboardActivity;
 import com.project.isell_java.activity.ImportActivity;
 import com.project.isell_java.activity.NewOrderActivity;
+import com.project.isell_java.activity.OrdersActivity;
 
 import java.util.List;
 
@@ -145,13 +146,13 @@ public class AdapterDash extends BaseAdapter {
 
 
                 }
-                //else if (holder.txt1.getText().toString().trim().equals(ChangePassword)) {
-//                    // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
-//                    Intent in = new Intent(context, ChangePasswordActivity.class);
-//
-//                    context.startActivity(in);
-//
-//                }
+                else if (holder.txt1.getText().toString().trim().equals("Orders")) {
+                    // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
+                    Intent in = new Intent(context, OrdersActivity.class);
+
+                    context.startActivity(in);
+
+                }
 
             }
         });

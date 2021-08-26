@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.project.isell_java.database.entities.CartEntity;
 import com.project.isell_java.database.entities.OrderDetailsEntity;
+import com.project.isell_java.pojos.order_not_uploaded.Model;
 
 import java.util.List;
 
@@ -22,6 +23,9 @@ public interface OrderDetailsEntityDao {
     @Query(" Select * from order_details order by id")
     public List<OrderDetailsEntity> get_all_datas();
 
+
+    @Query(" Select ono,sum(total) as tot from order_details group by ono")
+    public List<Model> get_summary();
 
 
 
