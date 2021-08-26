@@ -20,6 +20,7 @@ import com.project.isell_java.database.appdb.Appdb;
 import com.project.isell_java.database.entities.InvEntity;
 import com.project.isell_java.pojos.import_data.InventoriesItem;
 import com.project.isell_java.pojos.import_data.Response;
+import com.project.isell_java.pojos.import_data.RetailersItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,27 @@ public class ImportActivity extends BasicActivity {
                 if(response.body() !=null) {
                     if (response.body().getData() != null) {
 
+                        int pricing_level=0;
+
+                        List<RetailersItem> list_Retailers=   response.body().getData().getRetailers();
+
+                        for( RetailersItem row:list_Retailers)
+                        {
+                            if(row.getContact().equals(db.getChartcodeEntityDao().get_user_cred()))
+                            {
+                                pricing_level= row.getPricingLevel();
+
+                            }
+
+
+
+                        }
+                        if(pricing_level==0)
+                        {
+                            pricing_level=1;
+                        }
+
+
 
                         db.getInvEntityDao().del_all();
 
@@ -118,9 +140,12 @@ public class ImportActivity extends BasicActivity {
 
 
                             db.getInvEntityDao().insert_inv_item(new InvEntity(0, "" + row.getUid(), "" + row.getName(), "" + row.getHsncode(), "" + row.getGroup(),
-                                    row.getRate1(), row.getRate2(), row.getRate3(), row.getRate4(), 1));
+                                    row.getRate1(), row.getRate2(), row.getRate3(), row.getRate4(), pricing_level));
 
                         }
+
+
+
 
 
                         showSnack_W("Downloaded " + db.getInvEntityDao().get_count() + " items");

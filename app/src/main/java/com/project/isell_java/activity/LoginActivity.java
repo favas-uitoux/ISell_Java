@@ -136,7 +136,7 @@ public class LoginActivity extends BasicActivity {
 
             Endpoint apiService = ApiClient.getClient().create(Endpoint.class);
 
-            //  Call<Response> call = apiService.do_login("8943220888", "123456");
+
             Call<Response> call = apiService.do_login(username, password);
 
             call.enqueue(new Callback<Response>() {
@@ -180,9 +180,11 @@ public class LoginActivity extends BasicActivity {
 
                             //save token to db
                             db.getChartcodeEntityDao().del_token();
+                            db.getChartcodeEntityDao().del_user_cred();
 
                             db.getChartcodeEntityDao().insert_chartcode_item(new ChartcodeEntity(0,"token",response.body().getData().getToken(),""+response.body().getData().getUser().getId(),response.body().getData().getUser().getDistroId()));
 
+                            db.getChartcodeEntityDao().insert_chartcode_item(new ChartcodeEntity(0,"user_cred",username,password,0));
 
 
                             //check serie no set or not?

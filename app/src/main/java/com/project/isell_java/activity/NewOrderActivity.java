@@ -129,10 +129,26 @@ public class NewOrderActivity extends BasicActivity {
             for (InvEntity row : list_inv) {
 
 
-                //chk price level and save price level in db
-                if()
+                double rate=0;
 
-                double rate = row.getRate1();
+                if(row.getPlevel()==1)
+                {
+                    rate = row.getRate1();
+                }
+                else if(row.getPlevel()==2 )
+                {
+                    rate = row.getRate2();
+                }
+                else if(row.getPlevel()==3 )
+                {
+                    rate = row.getRate3();
+                }
+                else if(row.getPlevel()==4 )
+                {
+                    rate = row.getRate4();
+                }
+
+
 
 
 
@@ -225,25 +241,26 @@ public class NewOrderActivity extends BasicActivity {
                     for(CartEntity row:list_confirm)
                     {
 
-                        row.getItem_id();
-                        row.getItemname();
 
-                        row.getQty();
-                        row.getSel_rate();
-
-                        // calculate total qty*rate
+                        if(!oDate.equals("") && !order_no.equals("") && !client_id.equals("")  && !distro_id.equals("")  &&  !row.getItem_id().equals("") && !row.getItemname().equals("")  && row.getQty()!=0 && row.getTotal() !=0 )
+                        {
+                            db.getOrderDetailsEntityDao().insert_order_item(new OrderDetailsEntity(0,oDate,order_no,client_id,distro_id,  row.getItem_id(), row.getItemname(),row.getQty(), row.getTotal()));
+                        }
+                        else
+                        {
+                            showSnack_W("Failed to save 1 data");
+                        }
 
                     }
 
+                    db.getChartcodeEntityDao().update_series_details();
+                    db.getCartEntityDao().del_all();
+                    dialog.dismiss();
 
 
-                 //   showSnack_W(series +"-"+no);
-                    Toast.makeText(getApplicationContext(),""+series +"-"+no,Toast.LENGTH_LONG).show();
+                    finish();
 
-
-
-
-
+                    showSnack_W("Saved your order");
 
 
                 }

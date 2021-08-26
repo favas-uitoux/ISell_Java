@@ -36,6 +36,9 @@ public interface ChartcodeEntityDao {
     @Query(" Select * from chartcode  where type='series_no' ")
     public List<ChartcodeEntity> get_series_details();
 
+    @Query(" update  chartcode   set val3 =val3+1   where type='series_no' ")
+    public int update_series_details();
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public Long insert_chartcode_item(ChartcodeEntity tbl);
@@ -43,6 +46,13 @@ public interface ChartcodeEntityDao {
 
     @Query(" Delete from chartcode where type='token' ")
     public int del_token();
+
+    @Query(" Delete from chartcode where type='user_cred' ")
+    public int del_user_cred();
+
+
+    @Query(" select val1 from chartcode where type='user_cred' ")
+    public String get_user_cred();
 
     @Query(" Delete from chartcode where type='series_no' ")
     public int del_series();
