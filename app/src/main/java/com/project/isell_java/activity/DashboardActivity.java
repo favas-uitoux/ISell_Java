@@ -59,7 +59,7 @@ public class DashboardActivity extends BasicActivity {
         list = new ArrayList<String>();
         list.add("New Order");
         list.add("Import");
-        list.add("Sync");
+        list.add("Upload");
         list.add("Orders");
         gridview.setAdapter(new AdapterDash(this, list, "Client"));
 

@@ -36,4 +36,17 @@ public final class Utils {
     public static void setTocken(String tocken) {
         Utils.tocken = tocken;
     }
+
+
+    public static String GVCOT(String search_s) {
+        if (search_s == null) {
+
+        } else {
+            search_s = "'" + search_s.replaceAll("'", "''") + "'";
+        }
+
+        return search_s;
+    }
+
+
 }
