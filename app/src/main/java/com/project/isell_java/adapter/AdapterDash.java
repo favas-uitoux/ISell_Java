@@ -126,9 +126,9 @@ public class AdapterDash extends BaseAdapter {
 
                 if (holder.txt1.getText().toString().trim().equals("Import")) {
                     // Toast.makeText(context,"add teacher",Toast.LENGTH_LONG).show();
-               //     Intent in = new Intent(context, ImportActivity.class);
+                    Intent in = new Intent(context, ImportActivity.class);
 
-                //    context.startActivity(in);
+                    context.startActivity(in);
 
                 }
                 else if (holder.txt1.getText().toString().trim().equals("New Order")) {
